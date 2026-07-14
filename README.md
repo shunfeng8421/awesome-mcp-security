@@ -18,6 +18,50 @@ Everything you need to know about Model Context Protocol (MCP) security.
   - 💾 [MCP Security Servers](#-mcp-security-servers)
   - 💻 [Other Useful Resources](#-other-useful-resources)
  
+## 🗺️ MCP Attack Surface Taxonomy
+
+> **Contributed by [shunfeng8421](https://github.com/shunfeng8421)** — 30+ MCP servers audited, 2 original CVEs.
+
+Every MCP vulnerability fits into one of 6 attack surfaces.
+
+### 1. Tool Parameter Injection
+| CVE | Vulnerability |
+|------|------|
+| cherrystudio #1 | `file_path` → `open()` no validation → arbitrary file read |
+| cherrystudio #2 | `image_url` → HTTP fetch no SSRF filter |
+| mcp-atlassian | `file_path` → server-side open → arbitrary read |
+
+### 2. Inspector Exposure
+| CVE | Vulnerability |
+|------|------|
+| CVE-2025-49596 | MCP Inspector → 0.0.0.0 + no auth → RCE |
+| CVE-2026-23744 | MCPJam Inspector → 0.0.0.0 + RCE via server install |
+
+### 3. Client Trust
+- Tool description poisoning → trick AI
+- Output injection → hide malicious content
+- Credential phishing → request API keys
+
+### 4. Transport
+- stdio hijack → replace local MCP binary
+- Unencrypted SSE → MITM
+- No message signing → replay attacks
+
+### 5. Implementation (same as web vulns, MCP context)
+- Path traversal (30+ servers, ~3% hit rate)
+- SQL injection in tool handlers
+- Command injection (`shell=True`)
+- Weak defaults (Flowise JWT)
+- eval/exec without sandbox (n8n, PraisonAI)
+- Auth bypass (Apollo URL parsing)
+
+### 6. Supply Chain
+- npm package takeover
+- Dependency vulns
+- Config file leaks
+
+---
+
 ## 📔 Security Considerations
 Official Security Considerations from the [Official MCP Specification Rev: 2025-03-26](https://modelcontextprotocol.io/specification/2025-03-26/server/tools)
 
