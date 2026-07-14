@@ -371,6 +371,347 @@
         "exploit-craftcms"
       ],
       "url": "github.com/shunfeng8421/exploit-library"
+    },
+    "semgrep-P1-exec": {
+      "type": "rule",
+      "language": "Python",
+      "name": "exec without sandbox",
+      "connects_to": [
+        "CWE-94"
+      ]
+    },
+    "semgrep-P5-secret": {
+      "type": "rule",
+      "language": "Python",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-P7-sql": {
+      "type": "rule",
+      "language": "Python",
+      "name": "SQL f-string injection",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "semgrep-P15-path": {
+      "type": "rule",
+      "language": "Python",
+      "name": "file_path \u2192 open() no validation",
+      "connects_to": [
+        "CWE-22",
+        "pattern-15"
+      ]
+    },
+    "semgrep-G1-rand": {
+      "type": "rule",
+      "language": "Go",
+      "name": "Weak random for crypto",
+      "connects_to": [
+        "CWE-338"
+      ]
+    },
+    "semgrep-G2-secret": {
+      "type": "rule",
+      "language": "Go",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-G3-sql": {
+      "type": "rule",
+      "language": "Go",
+      "name": "SQL concatenation",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "semgrep-G4-ssrf": {
+      "type": "rule",
+      "language": "Go",
+      "name": "User-controlled HTTP URL",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "semgrep-G5-tls": {
+      "type": "rule",
+      "language": "Go",
+      "name": "TLS verification disabled",
+      "connects_to": [
+        "CWE-295"
+      ]
+    },
+    "semgrep-G6-path": {
+      "type": "rule",
+      "language": "Go",
+      "name": "File path without validation",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-T1-eval": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "eval() with user input",
+      "connects_to": [
+        "CWE-94"
+      ]
+    },
+    "semgrep-T2-deser": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Unsafe deserialization",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "semgrep-T3-proto": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Prototype pollution",
+      "connects_to": [
+        "CWE-1321"
+      ]
+    },
+    "semgrep-T4-secret": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-T5-nosql": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "NoSQL injection",
+      "connects_to": [
+        "CWE-943"
+      ]
+    },
+    "semgrep-T6-path": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Path traversal",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-T7-cors": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "CORS allow all origins",
+      "connects_to": [
+        "CWE-942"
+      ]
+    },
+    "semgrep-R1-unsafe": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Unsafe block",
+      "connects_to": [
+        "CWE-242"
+      ]
+    },
+    "semgrep-R2-file": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "File path no canonicalization",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-R3-cmd": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Command injection",
+      "connects_to": [
+        "CWE-78"
+      ]
+    },
+    "semgrep-R4-deser": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Unsafe deserialization",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "semgrep-R5-secret": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-R6-ssrf": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "User URL in reqwest",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "semgrep-W1-reentrancy": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Reentrancy",
+      "connects_to": [
+        "CWE-841"
+      ]
+    },
+    "semgrep-W2-overflow": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Integer overflow",
+      "connects_to": [
+        "CWE-682"
+      ]
+    },
+    "semgrep-W3-selfdestruct": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Unprotected SELFDESTRUCT",
+      "connects_to": [
+        "CWE-284"
+      ]
+    },
+    "semgrep-W4-access": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Missing access control",
+      "connects_to": [
+        "CWE-284"
+      ]
+    },
+    "CWE-94": {
+      "type": "weakness",
+      "name": "Code Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-P1-exec",
+        "semgrep-T1-eval"
+      ]
+    },
+    "CWE-338": {
+      "type": "weakness",
+      "name": "Weak PRNG",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-G1-rand"
+      ]
+    },
+    "CWE-295": {
+      "type": "weakness",
+      "name": "Improper Certificate Validation",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-G5-tls"
+      ]
+    },
+    "CWE-1321": {
+      "type": "weakness",
+      "name": "Prototype Pollution",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-T3-proto"
+      ]
+    },
+    "CWE-943": {
+      "type": "weakness",
+      "name": "NoSQL Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-T5-nosql"
+      ]
+    },
+    "CWE-942": {
+      "type": "weakness",
+      "name": "Permissive Cross-domain Policy",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-T7-cors"
+      ]
+    },
+    "CWE-242": {
+      "type": "weakness",
+      "name": "Use of Unsafe Function",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-R1-unsafe"
+      ]
+    },
+    "CWE-78": {
+      "type": "weakness",
+      "name": "OS Command Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-R3-cmd"
+      ]
+    },
+    "CWE-841": {
+      "type": "weakness",
+      "name": "Improper Enforcement of Behavioral Workflow",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W1-reentrancy"
+      ]
+    },
+    "CWE-682": {
+      "type": "weakness",
+      "name": "Incorrect Calculation",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W2-overflow"
+      ]
+    },
+    "CWE-284": {
+      "type": "weakness",
+      "name": "Improper Access Control",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W3-selfdestruct",
+        "semgrep-W4-access"
+      ]
+    },
+    "semgrep-rules-collection": {
+      "type": "tool",
+      "tool": "semgrep-rules",
+      "connects_to": [
+        "semgrep-P1-exec",
+        "semgrep-P5-secret",
+        "semgrep-P7-sql",
+        "semgrep-P15-path",
+        "semgrep-G1-rand",
+        "semgrep-G2-secret",
+        "semgrep-G3-sql",
+        "semgrep-G4-ssrf",
+        "semgrep-G5-tls",
+        "semgrep-G6-path",
+        "semgrep-T1-eval",
+        "semgrep-T2-deser",
+        "semgrep-T3-proto",
+        "semgrep-T4-secret",
+        "semgrep-T5-nosql",
+        "semgrep-T6-path",
+        "semgrep-T7-cors",
+        "semgrep-R1-unsafe",
+        "semgrep-R2-file",
+        "semgrep-R3-cmd",
+        "semgrep-R4-deser",
+        "semgrep-R5-secret",
+        "semgrep-R6-ssrf",
+        "semgrep-W1-reentrancy",
+        "semgrep-W2-overflow",
+        "semgrep-W3-selfdestruct",
+        "semgrep-W4-access"
+      ],
+      "url": "awesome-mcp-security/rules/"
     }
   },
   "edges": [
@@ -488,6 +829,141 @@
       "from": "exploit-craftcms",
       "to": "exploit-library",
       "relation": "part_of"
+    },
+    {
+      "from": "semgrep-P1-exec",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P5-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P7-sql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P15-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G1-rand",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G2-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G3-sql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G4-ssrf",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G5-tls",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G6-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T1-eval",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T2-deser",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T3-proto",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T4-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T5-nosql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T6-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T7-cors",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R1-unsafe",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R2-file",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R3-cmd",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R4-deser",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R5-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R6-ssrf",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W1-reentrancy",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W2-overflow",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W3-selfdestruct",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W4-access",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
     }
   ]
 }
