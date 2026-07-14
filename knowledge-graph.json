@@ -1,116 +1,36 @@
 {
   "nodes": {
-    "CWE-22": {
-      "type": "weakness",
-      "name": "Path Traversal",
-      "severity": "HIGH",
-      "connects_to": ["pattern-15", "pattern-1", "cherrystudio-cve-1"],
-      "fix": "validate_safe_path() + os.path.realpath()"
-    },
-    "CWE-306": {
-      "type": "weakness", 
-      "name": "Missing Authentication",
-      "severity": "HIGH",
-      "connects_to": ["memoryos-cve", "pattern-auth-1"],
-      "fix": "Add FastAPI Depends(auth) middleware"
-    },
-    "CWE-918": {
-      "type": "weakness",
-      "name": "SSRF",
-      "severity": "HIGH",
-      "connects_to": ["cherrystudio-cve-2", "pattern-ssrf"],
-      "fix": "URL allowlist + dns rebinding protection"
-    },
-    "CWE-798": {
-      "type": "weakness",
-      "name": "Hardcoded Credentials",
-      "severity": "HIGH",
-      "connects_to": ["kimai-cve", "semgrep-rule-P5"],
-      "fix": "os.environ.get() + secret manager"
-    },
-
-    "pattern-15": {
-      "type": "pattern",
-      "name": "MCP file_path → open() 无验证",
-      "connects_to": ["CWE-22", "cherrystudio-cve-1", "mcp-scan-AS1"],
-      "search": "file_path parameter + open() without validate_safe_path()",
-      "category": "MCP"
-    },
-    "pattern-16": {
-      "type": "pattern",
-      "name": "Auth URL 解析偏移 → 认证绕过",
-      "connects_to": ["CWE-287", "apollo-cve"],
-      "search": "auth middleware + URL segment parsing mismatch",
-      "category": "Web"
-    },
-    "pattern-1": {
-      "type": "pattern",
-      "name": "通用路径遍历",
-      "connects_to": ["CWE-22"],
-      "search": "open(file_path) from request without validation",
-      "category": "Web"
-    },
-
-    "cherrystudio-cve-1": {
-      "type": "cve",
-      "id": "cherrystudio-qq-mcp #1",
-      "connects_to": ["CWE-22", "pattern-15", "mcp-scan-AS1"],
-      "impact": "Unauthenticated arbitrary file read on MCP server",
-      "fix": "Add validate_safe_path(file_path) before open()"
-    },
-    "cherrystudio-cve-2": {
-      "type": "cve",
-      "id": "cherrystudio-qq-mcp #2", 
-      "connects_to": ["CWE-918"],
-      "impact": "SSRF via recognize_image tool",
-      "fix": "URL allowlist for image fetching"
-    },
-    "memoryos-cve": {
-      "type": "cve",
-      "id": "memoryos #1",
-      "connects_to": ["CWE-306"],
-      "impact": "All 9 API endpoints without authentication",
-      "fix": "Add API key middleware to FastAPI router"
-    },
-
-    "mcp-scan-AS1": {
-      "type": "tool",
-      "tool": "mcp-scan",
-      "connects_to": ["pattern-15", "CWE-22", "cherrystudio-cve-1"],
-      "detection": "Checks for file_path → open() without validation"
-    },
-    "mcp-scan-AS2": {
-      "type": "tool",
-      "tool": "mcp-scan",
-      "connects_to": ["CWE-200"],
-      "detection": "Checks 0.0.0.0 binding without authentication"
-    },
-    "semgrep-rule-P5": {
-      "type": "tool",
-      "tool": "semgrep",
-      "connects_to": ["CWE-798"],
-      "detection": "Pattern: $KEY = \"$VALUE\" with secret/password/token keywords"
-    },
-
-    "daily-scan": {
-      "type": "tool",
-      "tool": "daily-scan.py",
-      "connects_to": ["exploit-db", "nvd", "CWE-798", "CWE-22"],
-      "schedule": "0 9 * * *"
-    }
+    "CWE-22": {"type":"weakness","name":"Path Traversal","severity":"HIGH","connects_to":["pattern-15","pattern-1","cherrystudio-cve-1"],"fix":"validate_safe_path() + os.path.realpath()"},
+    "CWE-306":{"type":"weakness","name":"Missing Authentication","severity":"HIGH","connects_to":["memoryos-cve","pattern-auth-1"],"fix":"Add auth middleware"},
+    "CWE-918":{"type":"weakness","name":"SSRF","severity":"HIGH","connects_to":["cherrystudio-cve-2","pattern-ssrf"],"fix":"URL allowlist"},
+    "CWE-798":{"type":"weakness","name":"Hardcoded Credentials","severity":"HIGH","connects_to":["kimai-cve","semgrep-rule-P5"],"fix":"os.environ.get()"},
+    "CWE-287":{"type":"weakness","name":"Authentication Bypass","severity":"HIGH","connects_to":["pattern-16","apollo-cve"]},
+    "CWE-200":{"type":"weakness","name":"Information Exposure","severity":"MEDIUM","connects_to":["mcp-scan-AS2"]},
+    "pattern-15":{"type":"pattern","name":"MCP file_path → open() 无验证","connects_to":["CWE-22","cherrystudio-cve-1","mcp-scan-AS1"],"category":"MCP"},
+    "pattern-16":{"type":"pattern","name":"Auth URL 解析偏移 → 认证绕过","connects_to":["CWE-287","apollo-cve"],"category":"Web"},
+    "pattern-1":{"type":"pattern","name":"通用路径遍历","connects_to":["CWE-22"],"category":"Web"},
+    "pattern-auth-1":{"type":"pattern","name":"Missing auth on API","connects_to":["CWE-306"],"category":"Web"},
+    "pattern-ssrf":{"type":"pattern","name":"SSRF via user URL","connects_to":["CWE-918"],"category":"Web"},
+    "cherrystudio-cve-1":{"type":"cve","id":"cherrystudio #1","connects_to":["CWE-22","pattern-15","mcp-scan-AS1"],"impact":"Arbitrary file read","fix":"validate_safe_path()"},
+    "cherrystudio-cve-2":{"type":"cve","id":"cherrystudio #2","connects_to":["CWE-918"],"impact":"SSRF via recognize_image"},
+    "memoryos-cve":{"type":"cve","id":"memoryos #1","connects_to":["CWE-306"],"impact":"9 endpoints no auth"},
+    "apollo-cve":{"type":"cve","id":"Apollo ConfigService","connects_to":["pattern-16","CWE-287"],"impact":"URL parsing → auth bypass"},
+    "kimai-cve":{"type":"cve","id":"Kimai APP_SECRET","connects_to":["CWE-798"],"impact":"Default secret in Docker"},
+    "mcp-scan-AS1":{"type":"tool","tool":"mcp-scan","connects_to":["pattern-15","CWE-22","cherrystudio-cve-1"],"detection":"file_path → open() no validation"},
+    "mcp-scan-AS2":{"type":"tool","tool":"mcp-scan","connects_to":["CWE-200"],"detection":"0.0.0.0 without auth"},
+    "semgrep-rule-P5":{"type":"tool","tool":"semgrep","connects_to":["CWE-798"],"detection":"Hardcoded secret check"},
+    "daily-scan":{"type":"tool","tool":"daily-scan.py","connects_to":["exploit-db","nvd"],"schedule":"0 9 * * *"},
+    "nvd":{"type":"source","name":"NVD CVE Database","connects_to":["daily-scan"]},
+    "exploit-db":{"type":"source","name":"Exploit-DB RSS","connects_to":["daily-scan"]}
   },
-
   "edges": [
-    {"from": "CWE-22", "to": "pattern-15", "relation": "detected_by"},
-    {"from": "pattern-15", "to": "cherrystudio-cve-1", "relation": "found_in"},
-    {"from": "mcp-scan-AS1", "to": "pattern-15", "relation": "detects"},
-    {"from": "cherrystudio-cve-1", "to": "mcp-scan-AS1", "relation": "verified_by"},
-    
-    {"from": "CWE-306", "to": "memoryos-cve", "relation": "classified_as"},
-    
-    {"from": "CWE-918", "to": "cherrystudio-cve-2", "relation": "classified_as"},
-    
-    {"from": "daily-scan", "to": "nvd", "relation": "ingests"},
-    {"from": "daily-scan", "to": "exploit-db", "relation": "ingests"}
+    {"from":"CWE-22","to":"pattern-15","relation":"detected_by"},
+    {"from":"pattern-15","to":"cherrystudio-cve-1","relation":"found_in"},
+    {"from":"mcp-scan-AS1","to":"pattern-15","relation":"detects"},
+    {"from":"cherrystudio-cve-1","to":"mcp-scan-AS1","relation":"verified_by"},
+    {"from":"CWE-306","to":"memoryos-cve","relation":"classified_as"},
+    {"from":"CWE-918","to":"cherrystudio-cve-2","relation":"classified_as"},
+    {"from":"daily-scan","to":"nvd","relation":"ingests"},
+    {"from":"daily-scan","to":"exploit-db","relation":"ingests"}
   ]
 }
