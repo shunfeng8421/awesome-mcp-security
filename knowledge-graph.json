@@ -1,36 +1,493 @@
 {
   "nodes": {
-    "CWE-22": {"type":"weakness","name":"Path Traversal","severity":"HIGH","connects_to":["pattern-15","pattern-1","cherrystudio-cve-1"],"fix":"validate_safe_path() + os.path.realpath()"},
-    "CWE-306":{"type":"weakness","name":"Missing Authentication","severity":"HIGH","connects_to":["memoryos-cve","pattern-auth-1"],"fix":"Add auth middleware"},
-    "CWE-918":{"type":"weakness","name":"SSRF","severity":"HIGH","connects_to":["cherrystudio-cve-2","pattern-ssrf"],"fix":"URL allowlist"},
-    "CWE-798":{"type":"weakness","name":"Hardcoded Credentials","severity":"HIGH","connects_to":["kimai-cve","semgrep-rule-P5"],"fix":"os.environ.get()"},
-    "CWE-287":{"type":"weakness","name":"Authentication Bypass","severity":"HIGH","connects_to":["pattern-16","apollo-cve"]},
-    "CWE-200":{"type":"weakness","name":"Information Exposure","severity":"MEDIUM","connects_to":["mcp-scan-AS2"]},
-    "pattern-15":{"type":"pattern","name":"MCP file_path → open() 无验证","connects_to":["CWE-22","cherrystudio-cve-1","mcp-scan-AS1"],"category":"MCP"},
-    "pattern-16":{"type":"pattern","name":"Auth URL 解析偏移 → 认证绕过","connects_to":["CWE-287","apollo-cve"],"category":"Web"},
-    "pattern-1":{"type":"pattern","name":"通用路径遍历","connects_to":["CWE-22"],"category":"Web"},
-    "pattern-auth-1":{"type":"pattern","name":"Missing auth on API","connects_to":["CWE-306"],"category":"Web"},
-    "pattern-ssrf":{"type":"pattern","name":"SSRF via user URL","connects_to":["CWE-918"],"category":"Web"},
-    "cherrystudio-cve-1":{"type":"cve","id":"cherrystudio #1","connects_to":["CWE-22","pattern-15","mcp-scan-AS1"],"impact":"Arbitrary file read","fix":"validate_safe_path()"},
-    "cherrystudio-cve-2":{"type":"cve","id":"cherrystudio #2","connects_to":["CWE-918"],"impact":"SSRF via recognize_image"},
-    "memoryos-cve":{"type":"cve","id":"memoryos #1","connects_to":["CWE-306"],"impact":"9 endpoints no auth"},
-    "apollo-cve":{"type":"cve","id":"Apollo ConfigService","connects_to":["pattern-16","CWE-287"],"impact":"URL parsing → auth bypass"},
-    "kimai-cve":{"type":"cve","id":"Kimai APP_SECRET","connects_to":["CWE-798"],"impact":"Default secret in Docker"},
-    "mcp-scan-AS1":{"type":"tool","tool":"mcp-scan","connects_to":["pattern-15","CWE-22","cherrystudio-cve-1"],"detection":"file_path → open() no validation"},
-    "mcp-scan-AS2":{"type":"tool","tool":"mcp-scan","connects_to":["CWE-200"],"detection":"0.0.0.0 without auth"},
-    "semgrep-rule-P5":{"type":"tool","tool":"semgrep","connects_to":["CWE-798"],"detection":"Hardcoded secret check"},
-    "daily-scan":{"type":"tool","tool":"daily-scan.py","connects_to":["exploit-db","nvd"],"schedule":"0 9 * * *"},
-    "nvd":{"type":"source","name":"NVD CVE Database","connects_to":["daily-scan"]},
-    "exploit-db":{"type":"source","name":"Exploit-DB RSS","connects_to":["daily-scan"]}
+    "CWE-22": {
+      "type": "weakness",
+      "name": "Path Traversal",
+      "severity": "HIGH",
+      "connects_to": [
+        "pattern-15",
+        "pattern-1",
+        "cherrystudio-cve-1"
+      ],
+      "fix": "validate_safe_path() + os.path.realpath()"
+    },
+    "CWE-306": {
+      "type": "weakness",
+      "name": "Missing Authentication",
+      "severity": "HIGH",
+      "connects_to": [
+        "memoryos-cve",
+        "pattern-auth-1"
+      ],
+      "fix": "Add auth middleware"
+    },
+    "CWE-918": {
+      "type": "weakness",
+      "name": "SSRF",
+      "severity": "HIGH",
+      "connects_to": [
+        "cherrystudio-cve-2",
+        "pattern-ssrf"
+      ],
+      "fix": "URL allowlist"
+    },
+    "CWE-798": {
+      "type": "weakness",
+      "name": "Hardcoded Credentials",
+      "severity": "HIGH",
+      "connects_to": [
+        "kimai-cve",
+        "semgrep-rule-P5"
+      ],
+      "fix": "os.environ.get()"
+    },
+    "CWE-287": {
+      "type": "weakness",
+      "name": "Authentication Bypass",
+      "severity": "HIGH",
+      "connects_to": [
+        "pattern-16",
+        "apollo-cve"
+      ]
+    },
+    "CWE-200": {
+      "type": "weakness",
+      "name": "Information Exposure",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "mcp-scan-AS2"
+      ]
+    },
+    "pattern-15": {
+      "type": "pattern",
+      "name": "MCP file_path \u2192 open() \u65e0\u9a8c\u8bc1",
+      "connects_to": [
+        "CWE-22",
+        "cherrystudio-cve-1",
+        "mcp-scan-AS1"
+      ],
+      "category": "MCP"
+    },
+    "pattern-16": {
+      "type": "pattern",
+      "name": "Auth URL \u89e3\u6790\u504f\u79fb \u2192 \u8ba4\u8bc1\u7ed5\u8fc7",
+      "connects_to": [
+        "CWE-287",
+        "apollo-cve"
+      ],
+      "category": "Web"
+    },
+    "pattern-1": {
+      "type": "pattern",
+      "name": "\u901a\u7528\u8def\u5f84\u904d\u5386",
+      "connects_to": [
+        "CWE-22"
+      ],
+      "category": "Web"
+    },
+    "pattern-auth-1": {
+      "type": "pattern",
+      "name": "Missing auth on API",
+      "connects_to": [
+        "CWE-306"
+      ],
+      "category": "Web"
+    },
+    "pattern-ssrf": {
+      "type": "pattern",
+      "name": "SSRF via user URL",
+      "connects_to": [
+        "CWE-918"
+      ],
+      "category": "Web"
+    },
+    "cherrystudio-cve-1": {
+      "type": "cve",
+      "id": "cherrystudio #1",
+      "connects_to": [
+        "CWE-22",
+        "pattern-15",
+        "mcp-scan-AS1"
+      ],
+      "impact": "Arbitrary file read",
+      "fix": "validate_safe_path()"
+    },
+    "cherrystudio-cve-2": {
+      "type": "cve",
+      "id": "cherrystudio #2",
+      "connects_to": [
+        "CWE-918"
+      ],
+      "impact": "SSRF via recognize_image"
+    },
+    "memoryos-cve": {
+      "type": "cve",
+      "id": "memoryos #1",
+      "connects_to": [
+        "CWE-306"
+      ],
+      "impact": "9 endpoints no auth"
+    },
+    "apollo-cve": {
+      "type": "cve",
+      "id": "Apollo ConfigService",
+      "connects_to": [
+        "pattern-16",
+        "CWE-287"
+      ],
+      "impact": "URL parsing \u2192 auth bypass"
+    },
+    "kimai-cve": {
+      "type": "cve",
+      "id": "Kimai APP_SECRET",
+      "connects_to": [
+        "CWE-798"
+      ],
+      "impact": "Default secret in Docker"
+    },
+    "mcp-scan-AS1": {
+      "type": "tool",
+      "tool": "mcp-scan",
+      "connects_to": [
+        "pattern-15",
+        "CWE-22",
+        "cherrystudio-cve-1"
+      ],
+      "detection": "file_path \u2192 open() no validation"
+    },
+    "mcp-scan-AS2": {
+      "type": "tool",
+      "tool": "mcp-scan",
+      "connects_to": [
+        "CWE-200"
+      ],
+      "detection": "0.0.0.0 without auth"
+    },
+    "semgrep-rule-P5": {
+      "type": "tool",
+      "tool": "semgrep",
+      "connects_to": [
+        "CWE-798"
+      ],
+      "detection": "Hardcoded secret check"
+    },
+    "daily-scan": {
+      "type": "tool",
+      "tool": "daily-scan.py",
+      "connects_to": [
+        "exploit-db",
+        "nvd"
+      ],
+      "schedule": "0 9 * * *"
+    },
+    "nvd": {
+      "type": "source",
+      "name": "NVD CVE Database",
+      "connects_to": [
+        "daily-scan"
+      ]
+    },
+    "exploit-db": {
+      "type": "source",
+      "name": "Exploit-DB RSS",
+      "connects_to": [
+        "daily-scan"
+      ]
+    },
+    "exploit-redis": {
+      "type": "exploit",
+      "name": "Redis Lua Sandbox Escape",
+      "cve": "CVE-2022-0543",
+      "connects_to": [
+        "CWE-693"
+      ]
+    },
+    "exploit-kong": {
+      "type": "exploit",
+      "name": "Kong Admin API RCE",
+      "cve": "CVE-2020-11710",
+      "connects_to": [
+        "CWE-306"
+      ]
+    },
+    "exploit-splunk": {
+      "type": "exploit",
+      "name": "Splunk File Write RCE",
+      "cve": "CVE-2026-20253",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "exploit-nextjs": {
+      "type": "exploit",
+      "name": "Next.js Middleware Bypass",
+      "cve": "CVE-2025-29927",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-mcp-inspector": {
+      "type": "exploit",
+      "name": "MCP Inspector RCE",
+      "cve": "CVE-2025-49596",
+      "connects_to": [
+        "CWE-306"
+      ]
+    },
+    "exploit-postgres": {
+      "type": "exploit",
+      "name": "PostgreSQL COPY RCE",
+      "cve": "CVE-2019-9193",
+      "connects_to": [
+        "CWE-20"
+      ]
+    },
+    "exploit-gitea": {
+      "type": "exploit",
+      "name": "Gitea Reverse Proxy Bypass",
+      "cve": "CVE-2026-20896",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-n8n": {
+      "type": "exploit",
+      "name": "n8n Sandbox Escape",
+      "cve": "CVE-2026-1470",
+      "connects_to": [
+        "CWE-693"
+      ]
+    },
+    "exploit-litellm": {
+      "type": "exploit",
+      "name": "LiteLLM Pre-Auth SQLi",
+      "cve": "CVE-2026-42208",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "exploit-mitmproxy": {
+      "type": "exploit",
+      "name": "mitmproxy SSRF",
+      "cve": "CVE-2025-23217",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "exploit-simplehelp": {
+      "type": "exploit",
+      "name": "SimpleHelp OIDC Bypass",
+      "cve": "CVE-2026-48558",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-ingress": {
+      "type": "exploit",
+      "name": "IngressNightmare RCE",
+      "cve": "CVE-2025-1974",
+      "connects_to": [
+        "CWE-20"
+      ]
+    },
+    "exploit-roundcube": {
+      "type": "exploit",
+      "name": "Roundcube Deserialization",
+      "cve": "CVE-2025-49113",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "exploit-freepbx": {
+      "type": "exploit",
+      "name": "FreePBX SQL Injection",
+      "cve": "CVE-2025-57819",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "exploit-craftcms": {
+      "type": "exploit",
+      "name": "Craft CMS Object Injection",
+      "cve": "CVE-2025-32432",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "CWE-693": {
+      "type": "weakness",
+      "name": "Protection Mechanism Failure",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-redis",
+        "exploit-n8n"
+      ]
+    },
+    "CWE-20": {
+      "type": "weakness",
+      "name": "Improper Input Validation",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-postgres",
+        "exploit-ingress"
+      ]
+    },
+    "CWE-89": {
+      "type": "weakness",
+      "name": "SQL Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-litellm",
+        "exploit-freepbx"
+      ]
+    },
+    "CWE-502": {
+      "type": "weakness",
+      "name": "Deserialization of Untrusted Data",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-roundcube",
+        "exploit-craftcms"
+      ]
+    },
+    "exploit-library": {
+      "type": "tool",
+      "tool": "exploit-library",
+      "connects_to": [
+        "exploit-redis",
+        "exploit-kong",
+        "exploit-splunk",
+        "exploit-nextjs",
+        "exploit-mcp-inspector",
+        "exploit-postgres",
+        "exploit-gitea",
+        "exploit-n8n",
+        "exploit-litellm",
+        "exploit-mitmproxy",
+        "exploit-simplehelp",
+        "exploit-ingress",
+        "exploit-roundcube",
+        "exploit-freepbx",
+        "exploit-craftcms"
+      ],
+      "url": "github.com/shunfeng8421/exploit-library"
+    }
   },
   "edges": [
-    {"from":"CWE-22","to":"pattern-15","relation":"detected_by"},
-    {"from":"pattern-15","to":"cherrystudio-cve-1","relation":"found_in"},
-    {"from":"mcp-scan-AS1","to":"pattern-15","relation":"detects"},
-    {"from":"cherrystudio-cve-1","to":"mcp-scan-AS1","relation":"verified_by"},
-    {"from":"CWE-306","to":"memoryos-cve","relation":"classified_as"},
-    {"from":"CWE-918","to":"cherrystudio-cve-2","relation":"classified_as"},
-    {"from":"daily-scan","to":"nvd","relation":"ingests"},
-    {"from":"daily-scan","to":"exploit-db","relation":"ingests"}
+    {
+      "from": "CWE-22",
+      "to": "pattern-15",
+      "relation": "detected_by"
+    },
+    {
+      "from": "pattern-15",
+      "to": "cherrystudio-cve-1",
+      "relation": "found_in"
+    },
+    {
+      "from": "mcp-scan-AS1",
+      "to": "pattern-15",
+      "relation": "detects"
+    },
+    {
+      "from": "cherrystudio-cve-1",
+      "to": "mcp-scan-AS1",
+      "relation": "verified_by"
+    },
+    {
+      "from": "CWE-306",
+      "to": "memoryos-cve",
+      "relation": "classified_as"
+    },
+    {
+      "from": "CWE-918",
+      "to": "cherrystudio-cve-2",
+      "relation": "classified_as"
+    },
+    {
+      "from": "daily-scan",
+      "to": "nvd",
+      "relation": "ingests"
+    },
+    {
+      "from": "daily-scan",
+      "to": "exploit-db",
+      "relation": "ingests"
+    },
+    {
+      "from": "exploit-redis",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-kong",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-splunk",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-nextjs",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-mcp-inspector",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-postgres",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-gitea",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-n8n",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-litellm",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-mitmproxy",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-simplehelp",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-ingress",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-roundcube",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-freepbx",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-craftcms",
+      "to": "exploit-library",
+      "relation": "part_of"
+    }
   ]
 }
