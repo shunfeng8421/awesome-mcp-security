@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta charset="UTF-8"><title>安全知识图谱 — shunfeng8421</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#0d1117;color:#c9d1d9;overflow:hidden}
+canvas{display:block}
+.legend{position:fixed;bottom:20px;right:20px;background:#161b22;border:1px solid #30363d;padding:10px;border-radius:6px;font-size:11px;z-index:10}
+.legend div{margin:3px 0;display:flex;align-items:center;gap:6px}
+.legend span{width:10px;height:10px;border-radius:50%;display:inline-block}
+.info{position:fixed;top:10px;left:10px;background:#161b22;border:1px solid #30363d;padding:12px;border-radius:6px;max-width:350px;display:none;font-size:12px;z-index:10;max-height:80vh;overflow-y:auto}
+.info h3{color:#58a6ff;margin-bottom:4px}
+.info .fix{color:#3fb950;margin-top:4px}
+.close{float:right;cursor:pointer;color:#8b949e}
+.stats{position:fixed;top:10px;right:10px;font-size:11px;color:#8b949e;z-index:10}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="stats" id="stats"></div>
+<div class="legend">
+  <div><span style="background:#f85149"></span> CWE</div>
+  <div><span style="background:#58a6ff"></span> Pattern / Rule</div>
+  <div><span style="background:#e3b341"></span> CVE</div>
+  <div><span style="background:#ab7df8"></span> Exploit</div>
+  <div><span style="background:#3fb950"></span> Tool</div>
+</div>
+<div class="info" id="info"><span class="close" onclick="this.parentElement.style.display='none'">✕</span><div id="infoContent"></div></div>
+
+<script>
+const COLORS = {
+  weakness:'#f85149', pattern:'#58a6ff', cve:'#e3b341', exploit:'#ab7df8',
+  tool:'#3fb950', source:'#8b949e', rule:'#58a6ff'
+};
+const SIZES = {weakness:14, cve:10, exploit:9, tool:11, pattern:8, source:7, rule:7};
+
+const c=document.getElementById('c'), ctx=c.getContext('2d');
+c.width=window.innerWidth; c.height=window.innerHeight;
+
+let nodes=[], edges=[], hoverNode=null, dragNode=null;
+
+fetch('knowledge-graph.json').then(r=>r.json()).then(data=>{
+  Object.entries(data.nodes).forEach(([id,n])=>{
+    nodes.push({id,x:Math.random()*c.width,y:Math.random()*c.height,vx:0,vy:0,
+      name:n.name||id,type:n.type||'unknown',fix:n.fix,cve:n.cve,conn:(n.connects_to||[]).length});
+  });
+  data.edges.forEach(e=>edges.push({s:e.from,t:e.to,r:e.relation}));
+
+  document.getElementById('stats').innerHTML=`${nodes.length} 节点 · ${edges.length} 边 · 拖拽移动 · 点击查看`;
+
+  let edgeMap={};
+  edges.forEach(e=>{edgeMap[e.s+'-'+e.t]=e;edgeMap[e.t+'-'+e.s]=e;});
+
+  function simulate(){
+    const dt=0.3, rep=5000, spring=.01, damp=.85;
+    for(let n of nodes){
+      if(n===dragNode) continue;
+      let fx=0,fy=0;
+      for(let m of nodes){
+        if(n===m) continue;
+        let dx=n.x-m.x, dy=n.y-m.y, d=Math.max(dx*dx+dy*dy,1);
+        fx+=dx/d*rep; fy+=dy/d*rep;
+      }
+      for(let e of edges){
+        if(e.s===n.id||e.t===n.id){
+          let t=e.s===n.id?nodes.find(x=>x.id===e.t):nodes.find(x=>x.id===e.s);
+          if(!t) continue;
+          let dx=t.x-n.x, dy=t.y-n.y, d=Math.sqrt(dx*dx+dy*dy)||1;
+          let f=(d-120)*spring;
+          fx+=dx/d*f; fy+=dy/d*f;
+        }
+      }
+      n.vx=(n.vx+fx*dt)*damp; n.vy=(n.vy+fy*dt)*damp;
+      n.x+=n.vx*dt; n.y+=n.vy*dt;
+      n.x=Math.max(20,Math.min(c.width-20,n.x));
+      n.y=Math.max(20,Math.min(c.height-20,n.y));
+    }
+  }
+
+  function draw(){
+    ctx.fillStyle='#0d1117'; ctx.fillRect(0,0,c.width,c.height);
+    for(let e of edges){
+      let s=nodes.find(n=>n.id===e.s), t=nodes.find(n=>n.id===e.t);
+      if(!s||!t) continue;
+      ctx.strokeStyle='#21262d'; ctx.lineWidth=1;
+      let isHover=hoverNode&&(hoverNode===s||hoverNode===t);
+      if(isHover){ctx.strokeStyle='#58a6ff';ctx.lineWidth=2}
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(t.x,t.y);ctx.stroke();
+      if(isHover){
+        let mx=(s.x+t.x)/2, my=(s.y+t.y)/2;
+        ctx.fillStyle='#8b949e';ctx.font='9px sans-serif';
+        ctx.fillText(e.r,mx+5,my-3);
+      }
+    }
+    for(let n of nodes){
+      let r=SIZES[n.type]||8;
+      ctx.fillStyle=COLORS[n.type]||'#888';
+      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();
+      if(edges.some(e=>(e.s===n.id||e.t===n.id)&&(hoverNode&&(hoverNode===n||hoverNode.id===e.s||hoverNode.id===e.t)))){
+        ctx.fillStyle='#c9d1d9';ctx.font='bold 10px sans-serif';
+        ctx.fillText(n.name,n.x+r+4,n.y+4);
+      }
+    }
+  }
+
+  c.onmousemove=e=>{
+    if(dragNode){dragNode.x=e.offsetX;dragNode.y=e.offsetY;return}
+    hoverNode=null;
+    for(let n of nodes){
+      let dx=n.x-e.offsetX, dy=n.y-e.offsetY;
+      if(dx*dx+dy*dy<200){hoverNode=n;break}
+    }
+  };
+  c.onmousedown=e=>{
+    for(let n of nodes){
+      let dx=n.x-e.offsetX, dy=n.y-e.offsetY;
+      if(dx*dx+dy*dy<200){dragNode=n;return}
+    }
+  };
+  c.onmouseup=()=>{dragNode=null};
+  c.onclick=e=>{
+    for(let n of nodes){
+      let dx=n.x-e.offsetX, dy=n.y-e.offsetY;
+      if(dx*dx+dy*dy<200){
+        let info=document.getElementById('info'), ic=document.getElementById('infoContent');
+        let conns=nodes.filter(m=>edges.some(e=>(e.s===n.id&&e.t===m.id)||(e.t===n.id&&e.s===m.id)));
+        ic.innerHTML=`
+          <h3>${n.name}</h3>
+          <p>类型: ${n.type} | 关联: ${n.conn} 节点</p>
+          ${n.fix?`<p class="fix">🔧 ${n.fix}</p>`:''}
+          ${n.cve?`<p>CVE: ${n.cve}</p>`:''}
+          ${conns.length?`<p>连接: ${conns.slice(0,8).map(x=>x.name).join(', ')}</p>`:''}
+        `;
+        info.style.display='block'; return;
+      }
+    }
+  };
+
+  setInterval(()=>{simulate();draw()},16);
+});
+</script>
+</body>
+</html>
