@@ -15,3 +15,10 @@
 
 - [📄 Full Taxonomy](../docs/README.md)
 - **Evidence**: 30+ MCP servers audited, 2 original CVEs discovered
+
+### An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits
+**shunfeng8421** — July 15, 2026
+
+- [📄 Paper](paper-mcp-taxonomy.md)
+- **Evidence**: 35 MCP servers audited, 4 languages, 2 original CVEs
+- **Key findings**: 4% vulnerability rate, 6 attack surfaces, 20+ sub-types
