@@ -18,6 +18,15 @@ Everything you need to know about Model Context Protocol (MCP) security.
   - 💾 [MCP Security Servers](#-mcp-security-servers)
   - 💻 [Other Useful Resources](#-other-useful-resources)
  
+## 🔬 Research by shunfeng8421
+
+- 📄 [Prompt Injection is Not an AI Problem](publications/paper-prompt-injection.md) — Why MCP tool hardening matters
+- 📄 [An Empirical Study of MCP Server Security](publications/paper-mcp-taxonomy.md) — 6 attack surfaces from 30+ audits
+- 📝 [I Scanned 460+ npm MCP Packages](docs/blog-npm-scan.md) — 0 real vulnerabilities found
+- 📋 [Security Researcher Portfolio](portfolio.md) — Full skills + tools overview
+- 📊 [Knowledge Graph](graph.html) — 91-node interactive visualization
+- 📖 [Complete Workflow Guide](docs/workflow-guide.md) — Daily operations playbook
+
 ## 🗺️ MCP Attack Surface Taxonomy
 
 > **Contributed by [shunfeng8421](https://github.com/shunfeng8421)** — 30+ MCP servers audited, 2 original CVEs.
