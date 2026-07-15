@@ -712,6 +712,99 @@
         "semgrep-W4-access"
       ],
       "url": "awesome-mcp-security/rules/"
+    },
+    "skill-fuzzing-l1": {
+      "type": "skill",
+      "name": "Fuzzing L1 \u2014 \u6a21\u677f\u53d8\u5f02",
+      "connects_to": [
+        "pattern-15",
+        "cherrystudio-cve-1"
+      ],
+      "desc": "52 path variants, 4 bypass techniques"
+    },
+    "skill-fuzzing-l2": {
+      "type": "skill",
+      "name": "Fuzzing L2 \u2014 \u8986\u76d6\u5f15\u5bfc",
+      "connects_to": [
+        "skill-fuzzing-l1",
+        "CWE-22"
+      ],
+      "desc": "8/8 bugs found in 500 iterations"
+    },
+    "skill-reverse-eng": {
+      "type": "skill",
+      "name": "\u4e8c\u8fdb\u5236\u9006\u5411\u5165\u95e8",
+      "connects_to": [
+        "CWE-787",
+        "CWE-121"
+      ],
+      "desc": "Python dis \u2192 x86 objdump, strings, GDB"
+    },
+    "skill-protocol": {
+      "type": "skill",
+      "name": "\u7f51\u7edc\u534f\u8bae\u5206\u6790",
+      "connects_to": [
+        "pattern-15",
+        "mcp-scan-AS1"
+      ],
+      "desc": "TCP\u2192HTTP\u2192JSON-RPC\u2192MCP"
+    },
+    "skill-memory-exploit": {
+      "type": "skill",
+      "name": "\u5185\u5b58\u6f0f\u6d1e\u5229\u7528",
+      "connects_to": [
+        "CWE-787",
+        "CWE-121",
+        "skill-reverse-eng"
+      ],
+      "desc": "Buffer overflow, stack smashing"
+    },
+    "skill-prompt-inj": {
+      "type": "skill",
+      "name": "Prompt Injection \u7814\u7a76",
+      "connects_to": [
+        "pattern-15",
+        "cherrystudio-cve-1",
+        "paper-prompt"
+      ],
+      "desc": "6\u79cd\u653b\u51fb, 50%\u7ed5\u8fc7\u7387"
+    },
+    "skill-ctf": {
+      "type": "skill",
+      "name": "CTF \u5b9e\u6218",
+      "connects_to": [
+        "skill-reverse-eng",
+        "skill-fuzzing-l2",
+        "skill-memory-exploit"
+      ],
+      "desc": "strings\u2192\u9006\u5411\u2192\u6ea2\u51fa\u2192\u901a\u5173"
+    },
+    "paper-prompt": {
+      "type": "paper",
+      "name": "Prompt Injection is Not an AI Problem",
+      "connects_to": [
+        "skill-prompt-inj",
+        "cherrystudio-cve-1"
+      ],
+      "url": "awesome-mcp-security/publications/"
+    },
+    "paper-taxonomy": {
+      "type": "paper",
+      "name": "An Empirical Study of MCP Server Security",
+      "connects_to": [
+        "mcp-scan-AS1",
+        "cherrystudio-cve-1",
+        "npm-scan-result"
+      ],
+      "url": "awesome-mcp-security/publications/"
+    },
+    "npm-scan-result": {
+      "type": "metric",
+      "name": "npm MCP 460+ packages scanned, 0 holes",
+      "connects_to": [
+        "mcp-scan-AS1"
+      ],
+      "desc": "MCP ecosystem verified secure by empirical audit"
     }
   },
   "edges": [
@@ -964,6 +1057,16 @@
       "from": "semgrep-W4-access",
       "to": "semgrep-rules-collection",
       "relation": "belongs_to"
+    },
+    {
+      "from": "skill-prompt-inj",
+      "to": "paper-prompt",
+      "relation": "supports"
+    },
+    {
+      "from": "paper-taxonomy",
+      "to": "npm-scan-result",
+      "relation": "documents"
     }
   ]
 }
