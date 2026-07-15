@@ -75,7 +75,7 @@ function filterNodes(q){
 function resetView(){offsetX=0;offsetY=0;scale=1;showAllLabels=!showAllLabels}
 
 function simulate(){
-  const dt=0.2, rep=800, spring=0.005, damp=0.9, grav=0.02;
+  const dt=0.3, rep=200, spring=0.02, damp=0.92, grav=0.06;
   for(let n of nodes){
     if(!n.visible||n===dragNode) continue;
     let fx=(CX-n.x)*grav, fy=(CY-n.y)*grav; // gentle center gravity
