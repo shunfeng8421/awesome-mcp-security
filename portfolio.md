@@ -1,86 +1,59 @@
-# Security Researcher Portfolio — shunfeng8421
+# Security Researcher — shunfeng8421
 
-**GitHub**: [github.com/shunfeng8421] | **CVE**: 2 original | **Papers**: 2
-
----
-
-## 🔍 Vulnerability Discovery
-
-| CVE | Type | CWE | Impact |
-|------|------|------|------|
-| cherrystudio-qq-mcp #1 | Path Traversal | CWE-22 | Arbitrary file read (CVSS 7.5) |
-| cherrystudio-qq-mcp #2 | SSRF | CWE-918 | Internal network scanning (CVSS 6.5) |
-
-**Verified PoCs**: 18/18 (exploit-arsenal library)
+**Focus**: Model Context Protocol (MCP) Security · AI Agent Security  
+**GitHub**: [github.com/shunfeng8421](https://github.com/shunfeng8421)
 
 ---
 
-## 💣 Exploit Library
+## CVEs Discovered
 
-18 self-written exploits covering: Redis, Kong, Splunk, Next.js, MCP Inspector, PostgreSQL, Gitea, n8n, LiteLLM, mitmproxy, SimpleHelp, ingress-nginx, Roundcube, FreePBX, Craft CMS + 2 original cherrystudio
+| CVE | Project | CWE | Severity |
+|------|------|------|:--:|
+| #1 | cherrystudio-qq-mcp | CWE-22 — Path Traversal | 7.5 |
+| #2 | cherrystudio-qq-mcp | CWE-918 — SSRF | 6.5 |
+| #3 | memoryos | CWE-306 — Missing Auth | 8.1 |
 
-→ [github.com/shunfeng8421/exploit-library](https://github.com/shunfeng8421/exploit-library)
+## Verified PoCs (18/18)
 
----
+Kong RCE · Redis Sandbox Escape · Splunk File Write · Next.js Middleware Bypass · MCP Inspector RCE · PostgreSQL COPY RCE · Gitea Reverse Proxy · n8n Sandbox Escape · LiteLLM SQLi · mitmproxy SSRF · SimpleHelp OIDC Bypass · IngressNightmare RCE · Roundcube Deserialization · FreePBX SQLi · Craft CMS Injection
 
-## 🧠 MCP Security Research
+## Exploit Library (18 original exploit implementations)
 
-**First empirical study of MCP server security** — audited 35 servers across 4 languages
+[github.com/shunfeng8421/exploit-library](https://github.com/shunfeng8421/exploit-library)
 
-| Finding | Value |
-|------|------|
-| Vulnerability rate | 4% (2/50) |
-| Attack surfaces | 6 (20+ sub-types) |
-| npm ecosystem scan | 460+ packages — verified secure |
+## Research Papers
 
-→ [awesome-mcp-security](https://github.com/shunfeng8421/awesome-mcp-security)
+1. **"Prompt Injection is Not an AI Problem: Why MCP Tool Hardening Matters"** (2026)
+   - Experimental proof: defense must be at MCP tool layer, not prompt layer
+   - 6 attack vectors tested, 50% bypass rate on prompt-filtered agents
 
----
+2. **"An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits"** (2026)
+   - 35 MCP servers audited across 4 languages
+   - 4% vulnerability rate, 6 attack surfaces, 20+ sub-types
+   - npm ecosystem scan: 460+ packages verified secure
 
-## 📊 Papers
+## Open-Source Tools
 
-1. **Prompt Injection is Not an AI Problem** (2026) — Experimental proof: defense must be at MCP tool layer, not prompt layer
-2. **An Empirical Study of MCP Server Security** (2026) — 6 attack surfaces from 30+ audits
+| Tool | Description | Stars |
+|------|------|:--:|
+| [mcp-scan](https://github.com/shunfeng8421/mcp-scan) | MCP Security Scanner — 6 attack surfaces | — |
+| [awesome-mcp-security](https://github.com/shunfeng8421/awesome-mcp-security) | MCP Security Knowledge Base + Graph | — |
+| [exploit-library](https://github.com/shunfeng8421/exploit-library) | 18 original exploit implementations | — |
 
----
+## Skills
 
-## 🔧 Tools
+- **Code Audit**: 34 vulnerability patterns (16 Web + 18 Solidity)
+- **Automation**: 41 Semgrep rules / 7 languages, 4 cron pipelines
+- **Fuzzing**: Coverage-guided (Level 2), 8/8 bugs in 500 iterations
+- **Reverse Engineering**: Binary disassembly, buffer overflow exploitation
+- **Protocol Analysis**: TCP→HTTP→JSON-RPC→MCP
+- **Prompt Injection**: AI Agent attack chain research
 
-| Tool | Language | Purpose |
-|------|------|------|
-| [mcp-scan](https://github.com/shunfeng8421/mcp-scan) | Python | Automated MCP security assessment (v1.2, 6 attack surfaces) |
-| [awesome-mcp-security](https://github.com/shunfeng8421/awesome-mcp-security) | MD/JS | MCP security docs + knowledge graph (91 nodes) |
-| [exploit-library](https://github.com/shunfeng8421/exploit-library) | Python | 18 verified exploits |
+## Knowledge Graph
 
----
-
-## ⚙️ Automated Pipeline
-
-```
-09:00 daily-scan → dependency back-check
-10:00 NVD sync → new CVE intelligence  
-12:00 audit-pipeline → scan→reason→report
-      npm-batch-scan → every 2 hours, 7 keywords
-```
-
----
-
-## 📐 Skills
-
-| Skill | Level |
-|------|------|
-| Python security auditing | Expert |
-| Semgrep rule authoring (41 rules, 7 languages) | Advanced |
-| Fuzzing (template + coverage-guided) | Intermediate |
-| Binary reverse engineering | Intermediate |
-| Network protocol analysis | Intermediate |
-| Memory exploitation | Intermediate |
-| Solidity smart contract auditing | Basic |
+91 nodes, 52 edges — interactive visualization at:
+[awesome-mcp-security/graph.html](https://shunfeng8421.github.io/awesome-mcp-security/graph.html)
 
 ---
 
-## 🔗 Links
-
-- GitHub: [shunfeng8421](https://github.com/shunfeng8421)
-- Tools: [mcp-scan](https://github.com/shunfeng8421/mcp-scan) | [exploit-library](https://github.com/shunfeng8421/exploit-library)
-- Research: [awesome-mcp-security](https://github.com/shunfeng8421/awesome-mcp-security)
+*Independent Security Researcher · shiqiangchen6@gmail.com*
