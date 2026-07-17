@@ -20,7 +20,7 @@ Everything you need to know about Model Context Protocol (MCP) security.
  
 ## 🔬 Research by shunfeng8421
 
-- 📄 [Prompt Injection is Not an AI Problem](publications/paper-prompt-injection.md) — Why MCP tool hardening matters [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21370438.svg)](https://doi.org/10.5281/zenodo.21370438)
+- 📄 [Prompt Injection is Not an AI Problem](publications/paper-prompt-injection.md) — Why MCP tool hardening matters [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21388900.svg)](https://doi.org/10.5281/zenodo.21388900)
 - 📄 [An Empirical Study of MCP Server Security](publications/paper-mcp-taxonomy.md) — 6 attack surfaces from 30+ audits [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21370417.svg)](https://doi.org/10.5281/zenodo.21370417)
 - 📝 [I Scanned 460+ npm MCP Packages](docs/blog-npm-scan.md) — 0 real vulnerabilities found
 - 📋 [Security Researcher Portfolio](portfolio.md) — Full skills + tools overview
@@ -107,8 +107,8 @@ Official Security Considerations from the [Official MCP Specification Rev: 2025-
  
 ## 📃 Papers
 
-- (2026-07) [An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits](https://doi.org/10.5281/zenodo.21370417) — Shiqiang Chen, Zenodo
-- (2026-07) [Prompt Injection is Not an AI Problem: Why MCP Tool Hardening Matters](https://doi.org/10.5281/zenodo.21370438) — Shiqiang Chen, Zenodo
+- (2026-07) [An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits](https://doi.org/10.5281/zenodo.21383532) — Shiqiang Chen, Zenodo
+- (2026-07) [Prompt Injection is Not an AI Problem: Why MCP Tool Hardening Matters](https://doi.org/10.5281/zenodo.21388900) — Shiqiang Chen, Zenodo
 - (2025-08) [Systematic Analysis of MCP Security](https://arxiv.org/pdf/2508.12538)
 - (2025-05) [Beyond the Protocol: Unveiling Attack Vectors in the Model Context Protocol Ecosystem](https://arxiv.org/abs/2506.02040)
 - (2025-05) [Enterprise-Grade Security for the Model Context Protocol (MCP): Frameworks and Mitigation Strategies](https://arxiv.org/pdf/2504.08623)
